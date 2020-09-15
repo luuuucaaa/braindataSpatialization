@@ -5,14 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>p5.js example</title>
     <style>
-      body {
-        padding: 0;
-        margin: 0;
-        overflow: hidden;
+      body {background-color: black;}
+      body {padding: 0; margin: 0; overflow: hidden;}
+      canvas {margin: auto;}
+      #outPopUp {
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        z-index: 15;
+        top: 50%;
+        left: 50%;
+        margin: -200px 0 0 -200px;
+        background: black;
       }
-      canvas {
-        margin: auto;
-      }  
     </style>
     <script src="sketch.js"></script>
     <script src="p5.js"></script>
@@ -20,5 +25,10 @@
     <script src="electrode.js"></script>
   </head>
   <body>
+    <div id="p5_loading" class="loadingclass">
+      <div id="outPopUp">
+        <img src="/resources/loadingScreen.gif">
+      </div>
+    </div>
   </body>
 </html>

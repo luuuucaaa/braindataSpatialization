@@ -22,6 +22,7 @@ let electrodes = []; let number = 6; let diameter = 45;
 let coordinates = [[4.1/10, 1/5], [5.9/10, 1/5], [3.5/10, 1/2], [6.5/10, 1/2], [3.9/10, 4/5], [6.1/10, 4/5]];
 
 // gui
+let font;
 let startStopButton; let samplerateSlider;
 let playing = false;
 let muteAlphaButton; let muteHibetaButton; let muteLobetaButton; let muteThetaButton;
@@ -34,6 +35,8 @@ function preload() {
 
   hpilogo = loadImage('resources/hpilogo.png');
   brain = loadImage('resources/brain3d.png');
+
+  font = loadFont('resources/SourceCodePro-Medium.ttf')
 
   soundFormats('ogg', 'mp3', 'wav');
   // binauralThetaLuca1
@@ -269,7 +272,7 @@ function draw() {
 }
 
 function displayButtons() {
-  startStopButton = createButton('Start / Stop');
+  startStopButton = createButton('Start/Stop');
   startStopButton.style('width', '130px');
   startStopButton.position(15, 15);
   startStopButton.mousePressed(play);
@@ -314,6 +317,7 @@ function displaySliders() {
   samplerateSlider = createSlider(0, 100, 50);
   samplerateSlider.position(202, 15);
   samplerateSlider.style('width', '100px');
+  samplerateSlider.style('color', 'red');
 }
 
 function play() {
@@ -525,6 +529,7 @@ function displayLEDs() {
   rect(0, 0, 500, 50);
 
   textSize(16);
+  textFont(font);
   fill(255, 255, 255);
   text('slow', 157, 31);
   text('fast', 316, 31);
