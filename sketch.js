@@ -371,6 +371,10 @@ function playingSoundset1() {
         binauralAlpha[i] = binauralAlphaLuca1[i];
         binauralLobeta[i] = binauralLobetaLuca1[i];
         binauralHibeta[i] = binauralHibetaLuca1[i];
+        if (muteTheta) { binauralTheta[i].setVolume(0); }
+        if (muteAlpha) { binauralAlpha[i].setVolume(0); }
+        if (muteLobeta) { binauralLobeta[i].setVolume(0); }
+        if (muteHibeta) { binauralHibeta[i].setVolume(0); }
       }
       play();
     } else {
@@ -400,6 +404,10 @@ function playingSoundset2() {
         binauralAlpha[i] = binauralAlphaLukas1[i];
         binauralLobeta[i] = binauralLobetaLukas1[i];
         binauralHibeta[i] = binauralHibetaLukas1[i];
+        if (muteTheta) { binauralTheta[i].setVolume(0); }
+        if (muteAlpha) { binauralAlpha[i].setVolume(0); }
+        if (muteLobeta) { binauralLobeta[i].setVolume(0); }
+        if (muteHibeta) { binauralHibeta[i].setVolume(0); }
       }
       play();
     } else {
@@ -429,6 +437,10 @@ function playingSoundset3() {
         binauralAlpha[i] = binauralAlphaTim1[i];
         binauralLobeta[i] = binauralLobetaTim1[i];
         binauralHibeta[i] = binauralHibetaTim1[i];
+        if (muteTheta) { binauralTheta[i].setVolume(0); }
+        if (muteAlpha) { binauralAlpha[i].setVolume(0); }
+        if (muteLobeta) { binauralLobeta[i].setVolume(0); }
+        if (muteHibeta) { binauralHibeta[i].setVolume(0); }
       }
       play();
     } else {
