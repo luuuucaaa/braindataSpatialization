@@ -25,6 +25,7 @@ let coordinates = [[- 2.5/10, - 3/10], [2.5/10, - 3/10], [- 4/10, 0], [4/10, 0],
 let font;
 let startStopButton; let samplerateSlider;
 let playing = false;
+let fullscreenButton;
 let muteAlphaButton; let muteHibetaButton; let muteLobetaButton; let muteThetaButton;
 var muteTheta = false; var muteHibeta = false; var muteLobeta = false; var muteAlpha = false;
 let soundset1Button; let soundset2Button; let soundset3Button;
@@ -287,40 +288,45 @@ function displayButtons() {
   startStopButton.style('width', '130px');
   startStopButton.position(15, 15);
   startStopButton.mousePressed(play);
+  
+  fullscreenButton = createButton('Fullscreen');
+  fullscreenButton.style('width', '130px');
+  fullscreenButton.position(15, 45);
+  fullscreenButton.mousePressed(enterFullscreen);
 
   muteThetaButton = createButton('Theta');
   muteThetaButton.style('width', '130px');
-  muteThetaButton.position(15, 90);
+  muteThetaButton.position(15, 120);
   muteThetaButton.mousePressed(mutingTheta);
 
   muteAlphaButton = createButton('Alpha');
   muteAlphaButton.style('width', '130px');
-  muteAlphaButton.position(15, 120);
+  muteAlphaButton.position(15, 150);
   muteAlphaButton.mousePressed(mutingAlpha);
 
   muteLobetaButton = createButton('Lobeta');
   muteLobetaButton.style('width', '130px');
-  muteLobetaButton.position(15, 150);
+  muteLobetaButton.position(15, 180);
   muteLobetaButton.mousePressed(mutingLobeta);
 
   muteHibetaButton = createButton('Hibeta');
   muteHibetaButton.style('width', '130px');
-  muteHibetaButton.position(15, 180);
+  muteHibetaButton.position(15, 210);
   muteHibetaButton.mousePressed(mutingHibeta);
 
   soundset1Button = createButton('Soundset 1');
   soundset1Button.style('width', '130px');
-  soundset1Button.position(15, 255);
+  soundset1Button.position(15, 285);
   soundset1Button.mousePressed(playingSoundset1);
 
   soundset2Button = createButton('Soundset 2');
   soundset2Button.style('width', '130px');
-  soundset2Button.position(15, 285);
+  soundset2Button.position(15, 315);
   soundset2Button.mousePressed(playingSoundset2);
 
   soundset3Button = createButton('Soundset 3');
   soundset3Button.style('width', '130px');
-  soundset3Button.position(15, 315);
+  soundset3Button.position(15, 345);
   soundset3Button.mousePressed(playingSoundset3);
 }
 
@@ -343,6 +349,11 @@ function play() {
       binauralTheta[i].stop(); binauralAlpha[i].stop(); binauralLobeta[i].stop(); binauralHibeta[i].stop();
     }
   }
+}
+
+function enterFullscreen() {
+  let fs = fullscreen();
+  fullscreen(!fs);
 }
 
 function mutingTheta() {
@@ -480,64 +491,64 @@ function displayLEDs() {
   noFill();
   if (!muteTheta) {
     // theta circle on
-    stroke(0, 122, 158); strokeWeight(5); circle(155, 50, 104);
+    stroke(0, 122, 158); strokeWeight(5); circle(155, 80, 104);
   } else {
     // theta circle off
-    stroke(0, 122, 158, 90); strokeWeight(3); circle(155, 50, 104);
+    stroke(0, 122, 158, 90); strokeWeight(3); circle(155, 80, 104);
   }
 
   if (!muteAlpha) {
     // alpha circle on
-    stroke(177, 6, 58); strokeWeight(5); circle(155, 50, 164);
+    stroke(177, 6, 58); strokeWeight(5); circle(155, 80, 164);
   } else {
     // alpha circle off
-    stroke(177, 6, 58, 90); strokeWeight(3); circle(155, 50, 164);
+    stroke(177, 6, 58, 90); strokeWeight(3); circle(155, 80, 164);
   }
 
   if (!muteLobeta) {
     // lobeta circle on
-    stroke(221, 97, 8); strokeWeight(5); circle(155, 50, 224);
+    stroke(221, 97, 8); strokeWeight(5); circle(155, 80, 224);
   } else {
     // lobeta circle off
-    stroke(221, 97, 8, 90); strokeWeight(3); circle(155, 50, 224);
+    stroke(221, 97, 8, 90); strokeWeight(3); circle(155, 80, 224);
   }
 
   if (!muteHibeta) {
     // hibeta circle on
-    stroke(246, 168, 0); strokeWeight(5); circle(155, 50, 284);
+    stroke(246, 168, 0); strokeWeight(5); circle(155, 80, 284);
   } else {
     // hibeta circle off
-    stroke(246, 168, 0, 90); strokeWeight(3); circle(155, 50, 284);
+    stroke(246, 168, 0, 90); strokeWeight(3); circle(155, 80, 284);
   }
 
   if (soundset1) {
     // soundset1 on
-    stroke(0, 122, 158); strokeWeight(5); line(155, 267, 170, 267);
+    stroke(0, 122, 158); strokeWeight(5); line(155, 297, 170, 297);
   } else {
     // soundset1 off
-    stroke(0, 122, 158, 90); strokeWeight(3); line(155, 267, 170, 267);
+    stroke(0, 122, 158, 90); strokeWeight(3); line(155, 297, 170, 297);
   }
 
   if (soundset2) {
     // soundset2 on
-    stroke(0, 122, 158); strokeWeight(5); line(155, 297, 170, 297);
+    stroke(0, 122, 158); strokeWeight(5); line(155, 327, 170, 327);
   } else {
     // soundset2 off
-    stroke(0, 122, 158, 90); strokeWeight(3); line(155, 297, 170, 297);
+    stroke(0, 122, 158, 90); strokeWeight(3); line(155, 327, 170, 327);
   }
 
   if (soundset3) {
     // soundset3 on
-    stroke(0, 122, 158); strokeWeight(5); line(155, 327, 170, 327);
+    stroke(0, 122, 158); strokeWeight(5); line(155, 357, 170, 357);
   } else {
     // soundset3 off
-    stroke(0, 122, 158, 90); strokeWeight(3); line(155, 327, 170, 327);
+    stroke(0, 122, 158, 90); strokeWeight(3); line(155, 357, 170, 357);
   }
 
   // black square left
   noStroke(); fill(0); rect(0, 0, 155, 350);
   // black square above
-  rect(0, 0, 350, 50);
+  rect(0, 0, 350, 80);
 
   textSize(16);
   textFont(font);
