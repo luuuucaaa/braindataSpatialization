@@ -1,6 +1,6 @@
 // assets
 let filePath = './resources/MOCK_DATA.csv'; let data; let dataArray;
-let hpilogo; let hpilogoScale = 0.2; let brain; let brainScale;
+let hpilogo; let hpilogoScale; let brain; let brainScale;
 
 // audio
 let volumeFactor = 4; let fade = 0.05;
@@ -19,7 +19,7 @@ var valueMean = [0, 0, 0, 0, 0, 0];
 
 // electrodes
 let electrodes = []; let number = 6; let diameter = 45;
-let coordinates = [[4.1/10, 1/5], [5.9/10, 1/5], [3.5/10, 1/2], [6.5/10, 1/2], [3.9/10, 4/5], [6.1/10, 4/5]];
+let coordinates = [[- 2.5/10, - 3/10], [2.5/10, - 3/10], [- 4/10, 0], [4/10, 0], [- 2.5/10, 3/10], [2.5/10, 3/10]];
 
 // gui
 let font;
@@ -130,7 +130,7 @@ function preload() {
 function setup() {
   dataArray = data.getArray();
 
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(constrain(windowWidth, 1200, displayWidth), constrain(windowHeight, 600, displayHeight));
   imageMode(CENTER);
   frameRate(30);
   displayButtons();
@@ -146,17 +146,28 @@ function setup() {
 
   for (let i = 0; i < number; i++) {
     // create electrodes
-    electrodes[i] = new Electrode(width * coordinates[i][0], height * coordinates[i][1], diameter);
+    electrodes[i] = new Electrode(windowWidth * coordinates[i][0], windowHeight * coordinates[i][1], diameter);
     // set initial volume to 0
     binauralTheta[i].setVolume(0); binauralAlpha[i].setVolume(0); binauralLobeta[i].setVolume(0); binauralHibeta[i].setVolume(0);
   }
 }
 
+function windowResized() {
+  resizeCanvas(constrain(windowWidth, 1200, displayWidth), constrain(windowHeight, 600, displayHeight));
+}
+
 function draw() {
   background(0);
-  image(hpilogo, width - 160, 90, hpilogoScale * hpilogo.width, hpilogoScale * hpilogo.height);
-  brainScale = 0.00045 * width; image(brain, width/2, height/2, brainScale * brain.width, brainScale * brain.height);
+  brainScale = 0.00095 * constrain(windowHeight, 600, displayHeight); image(brain, width/2, height/2, brainScale * brain.width, brainScale * brain.height);
+  hpilogoScale = 0.2; image(hpilogo, width - 160, 90, hpilogoScale * hpilogo.width, hpilogoScale * hpilogo.height);
   displayLEDs();
+  
+  // rescaling electrodes
+  for (let i = 0; i < number; i++) {
+    electrodes[i].posX = width/2 + (coordinates[i][0] * brain.width * brainScale);
+    electrodes[i].posY = height/2 + (coordinates[i][1] * brain.height * brainScale);
+  }
+  diameter = brain.width * brain.height * brainScale * 0.00007;
 
   // define frameThreshhold
   frameThreshhold = map(samplerateSlider.value(), 0, 100, 60, 15);
@@ -524,9 +535,9 @@ function displayLEDs() {
   }
 
   // black square left
-  noStroke(); fill(0); rect(0, 0, 155, 500);
+  noStroke(); fill(0); rect(0, 0, 155, 350);
   // black square above
-  rect(0, 0, 500, 50);
+  rect(0, 0, 350, 50);
 
   textSize(16);
   textFont(font);
