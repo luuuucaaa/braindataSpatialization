@@ -334,7 +334,6 @@ function displaySliders() {
   samplerateSlider = createSlider(0, 100, 50);
   samplerateSlider.position(202, 15);
   samplerateSlider.style('width', '100px');
-  samplerateSlider.style('color', 'red');
 }
 
 function play() {
