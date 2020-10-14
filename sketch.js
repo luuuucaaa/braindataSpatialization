@@ -1,35 +1,36 @@
 // assets
-let filePath = './resources/MOCK_DATA.csv'; let data; let dataArray;
-let hpilogo; let hpilogoScale; let brain; let brainScale;
+let filePath = './resources/MOCK_DATA.csv', data, dataArray;
+let hpilogo, hpilogoScale, brain, brainScale;
 
 // audio
-let volumeFactor = 4; let fade = 0.05;
-let binauralTheta = []; let binauralAlpha = []; let binauralLobeta = []; let binauralHibeta = [];
-let binauralThetaLuca1 = []; let binauralAlphaLuca1 = []; let binauralLobetaLuca1 = []; let binauralHibetaLuca1 = [];
-let binauralThetaLukas1 = []; let binauralAlphaLukas1 = []; let binauralLobetaLukas1 = []; let binauralHibetaLukas1 = [];
-let binauralThetaTim1 = []; let binauralAlphaTim1 = []; let binauralLobetaTim1 = []; let binauralHibetaTim1 = [];
+let volumeFactor = 4, fade = 0.05;
+let binauralTheta = [], binauralAlpha = [], binauralLobeta = [], binauralHibeta = [];
+let binauralThetaLuca1 = [], binauralAlphaLuca1 = [], binauralLobetaLuca1 = [], binauralHibetaLuca1 = [];
+let binauralThetaLukas1 = [], binauralAlphaLukas1 = [], binauralLobetaLukas1 = [], binauralHibetaLukas1 = [];
+let binauralThetaTim1 = [], binauralAlphaTim1 = [], binauralLobetaTim1 = [], binauralHibetaTim1 = [];
+let binauralThetaPhilipp1 = [], binauralAlphaPhilipp1 = [], binauralLobetaPhilipp1 = [], binauralHibetaPhilipp1 = [];
 
 // data processing
-let frameIndex = 0; let frameThreshhold; let interpolationAmount;
-var valueThetaNow = [0, 0, 0, 0, 0, 0]; var valueThetaPast = [0, 0, 0, 0, 0, 0]; var valueTheta = [0, 0, 0, 0, 0, 0]; let valueThetaBuffer = [0, 0, 0, 0, 0, 0];
-var valueAlphaNow = [0, 0, 0, 0, 0, 0]; var valueAlphaPast = [0, 0, 0, 0, 0, 0]; var valueAlpha = [0, 0, 0, 0, 0, 0]; let valueAlphaBuffer = [0, 0, 0, 0, 0, 0];
-var valueLobetaNow = [0, 0, 0, 0, 0, 0]; var valueLobetaPast = [0, 0, 0, 0, 0, 0]; var valueLobeta = [0, 0, 0, 0, 0, 0]; let valueLobetaBuffer = [0, 0, 0, 0, 0, 0];
-var valueHibetaNow = [0, 0, 0, 0, 0, 0]; var valueHibetaPast = [0, 0, 0, 0, 0, 0]; var valueHibeta = [0, 0, 0, 0, 0, 0]; let valueHibetaBuffer = [0, 0, 0, 0, 0, 0];
+let frameIndex = 0, frameThreshhold, interpolationAmount;
+var valueThetaNow = [0, 0, 0, 0, 0, 0], valueThetaPast = [0, 0, 0, 0, 0, 0], valueTheta = [0, 0, 0, 0, 0, 0], valueThetaBuffer = [0, 0, 0, 0, 0, 0];
+var valueAlphaNow = [0, 0, 0, 0, 0, 0], valueAlphaPast = [0, 0, 0, 0, 0, 0], valueAlpha = [0, 0, 0, 0, 0, 0], valueAlphaBuffer = [0, 0, 0, 0, 0, 0];
+var valueLobetaNow = [0, 0, 0, 0, 0, 0], valueLobetaPast = [0, 0, 0, 0, 0, 0], valueLobeta = [0, 0, 0, 0, 0, 0], valueLobetaBuffer = [0, 0, 0, 0, 0, 0];
+var valueHibetaNow = [0, 0, 0, 0, 0, 0], valueHibetaPast = [0, 0, 0, 0, 0, 0], valueHibeta = [0, 0, 0, 0, 0, 0], valueHibetaBuffer = [0, 0, 0, 0, 0, 0];
 var valueMean = [0, 0, 0, 0, 0, 0];
 
 // electrodes
-let electrodes = []; let number = 6; let diameter = 45;
+let electrodes = [], number = 6, diameter = 45;
 let coordinates = [[- 2.5/10, - 3/10], [2.5/10, - 3/10], [- 4/10, 0], [4/10, 0], [- 2.5/10, 3/10], [2.5/10, 3/10]];
 
 // gui
 let font;
-let startStopButton; let samplerateSlider;
+let startStopButton, samplerateSlider;
 let playing = false;
 let fullscreenButton;
-let muteAlphaButton; let muteHibetaButton; let muteLobetaButton; let muteThetaButton;
-var muteTheta = false; var muteHibeta = false; var muteLobeta = false; var muteAlpha = false;
-let soundset1Button; let soundset2Button; let soundset3Button;
-var soundset1 = true; var soundset2 = false; var soundset3 = false;
+let muteAlphaButton, muteHibetaButton, muteLobetaButton, muteThetaButton;
+var muteTheta = false, muteHibeta = false, muteLobeta = false, muteAlpha = false;
+let soundset1Button, soundset2Button, soundset3Button;
+var soundset1 = true, soundset2 = false, soundset3 = false, soundset4 = false;
 
 function preload() {
   data = loadTable(filePath, 'csv', 'header');
@@ -126,6 +127,35 @@ function preload() {
   binauralHibetaTim1[3] = loadSound('resources/binauralAudioTim1/hibetaA90.wav');
   binauralHibetaTim1[4] = loadSound('resources/binauralAudioTim1/hibetaAm150.wav');
   binauralHibetaTim1[5] = loadSound('resources/binauralAudioTim1/hibetaA150.wav');
+
+  // binauralThetaPhilipp1
+  binauralThetaPhilipp1[0] = loadSound('resources/binauralAudioPhilipp1/thetaAm30.wav');
+  binauralThetaPhilipp1[1] = loadSound('resources/binauralAudioPhilipp1/thetaA30.wav');
+  binauralThetaPhilipp1[2] = loadSound('resources/binauralAudioPhilipp1/thetaAm90.wav');
+  binauralThetaPhilipp1[3] = loadSound('resources/binauralAudioPhilipp1/thetaA90.wav');
+  binauralThetaPhilipp1[4] = loadSound('resources/binauralAudioPhilipp1/thetaAm150.wav');
+  binauralThetaPhilipp1[5] = loadSound('resources/binauralAudioPhilipp1/thetaA150.wav');
+
+  binauralAlphaPhilipp1[0] = loadSound('resources/binauralAudioPhilipp1/alphaAm30.wav');
+  binauralAlphaPhilipp1[1] = loadSound('resources/binauralAudioPhilipp1/alphaA30.wav');
+  binauralAlphaPhilipp1[2] = loadSound('resources/binauralAudioPhilipp1/alphaAm90.wav');
+  binauralAlphaPhilipp1[3] = loadSound('resources/binauralAudioPhilipp1/alphaA90.wav');
+  binauralAlphaPhilipp1[4] = loadSound('resources/binauralAudioPhilipp1/alphaAm150.wav');
+  binauralAlphaPhilipp1[5] = loadSound('resources/binauralAudioPhilipp1/alphaA150.wav');
+
+  binauralLobetaPhilipp1[0] = loadSound('resources/binauralAudioPhilipp1/lobetaAm30.wav');
+  binauralLobetaPhilipp1[1] = loadSound('resources/binauralAudioPhilipp1/lobetaA30.wav');
+  binauralLobetaPhilipp1[2] = loadSound('resources/binauralAudioPhilipp1/lobetaAm90.wav');
+  binauralLobetaPhilipp1[3] = loadSound('resources/binauralAudioPhilipp1/lobetaA90.wav');
+  binauralLobetaPhilipp1[4] = loadSound('resources/binauralAudioPhilipp1/lobetaAm150.wav');
+  binauralLobetaPhilipp1[5] = loadSound('resources/binauralAudioPhilipp1/lobetaA150.wav');
+
+  binauralHibetaPhilipp1[0] = loadSound('resources/binauralAudioPhilipp1/hibetaAm30.wav');
+  binauralHibetaPhilipp1[1] = loadSound('resources/binauralAudioPhilipp1/hibetaA30.wav');
+  binauralHibetaPhilipp1[2] = loadSound('resources/binauralAudioPhilipp1/hibetaAm90.wav');
+  binauralHibetaPhilipp1[3] = loadSound('resources/binauralAudioPhilipp1/hibetaA90.wav');
+  binauralHibetaPhilipp1[4] = loadSound('resources/binauralAudioPhilipp1/hibetaAm150.wav');
+  binauralHibetaPhilipp1[5] = loadSound('resources/binauralAudioPhilipp1/hibetaA150.wav');
 }
 
 function setup() {
@@ -162,7 +192,7 @@ function draw() {
   brainScale = 0.00095 * constrain(windowHeight, 600, displayHeight); image(brain, width/2, height/2, brainScale * brain.width, brainScale * brain.height);
   hpilogoScale = 0.2; image(hpilogo, width - 160, 90, hpilogoScale * hpilogo.width, hpilogoScale * hpilogo.height);
   displayLEDs();
-  
+
   // rescaling electrodes
   for (let i = 0; i < number; i++) {
     electrodes[i].posX = width/2 + (coordinates[i][0] * brain.width * brainScale);
@@ -288,7 +318,7 @@ function displayButtons() {
   startStopButton.style('width', '130px');
   startStopButton.position(15, 15);
   startStopButton.mousePressed(play);
-  
+
   fullscreenButton = createButton('Fullscreen');
   fullscreenButton.style('width', '130px');
   fullscreenButton.position(15, 45);
@@ -328,6 +358,11 @@ function displayButtons() {
   soundset3Button.style('width', '130px');
   soundset3Button.position(15, 345);
   soundset3Button.mousePressed(playingSoundset3);
+
+  soundset4Button = createButton('Soundset 4');
+  soundset4Button.style('width', '130px');
+  soundset4Button.position(15, 375);
+  soundset4Button.mousePressed(playingSoundset4);
 }
 
 function displaySliders() {
@@ -418,6 +453,7 @@ function playingSoundset1() {
   soundset1 = true;
   soundset2 = false;
   soundset3 = false;
+  soundset4 = false;
 }
 
 function playingSoundset2() {
@@ -451,6 +487,7 @@ function playingSoundset2() {
   soundset1 = false;
   soundset2 = true;
   soundset3 = false;
+  soundset4 = false;
 }
 
 function playingSoundset3() {
@@ -484,6 +521,41 @@ function playingSoundset3() {
   soundset1 = false;
   soundset2 = false;
   soundset3 = true;
+  soundset4 = false;
+}
+
+function playingSoundset4() {
+  if (!soundset4) {
+    if (playing) {
+      play();
+      for (let i = 0; i < 6; i++) {
+        binauralTheta[i] = binauralThetaPhilipp1[i];
+        binauralAlpha[i] = binauralAlphaPhilipp1[i];
+        binauralLobeta[i] = binauralLobetaPhilipp1[i];
+        binauralHibeta[i] = binauralHibetaPhilipp1[i];
+        if (muteTheta) { binauralTheta[i].setVolume(0); }
+        if (muteAlpha) { binauralAlpha[i].setVolume(0); }
+        if (muteLobeta) { binauralLobeta[i].setVolume(0); }
+        if (muteHibeta) { binauralHibeta[i].setVolume(0); }
+      }
+      play();
+    } else {
+      for (let i = 0; i < 6; i++) {
+        binauralTheta[i] = binauralThetaPhilipp1[i];
+        binauralAlpha[i] = binauralAlphaPhilipp1[i];
+        binauralLobeta[i] = binauralLobetaPhilipp1[i];
+        binauralHibeta[i] = binauralHibetaPhilipp1[i];
+      }
+      for (let i = 0; i < number; i++) {
+        // set initial volume to 0
+        binauralTheta[i].setVolume(0); binauralAlpha[i].setVolume(0); binauralLobeta[i].setVolume(0); binauralHibeta[i].setVolume(0);
+      }
+    }
+  }
+  soundset1 = false;
+  soundset2 = false;
+  soundset3 = false;
+  soundset4 = true;
 }
 
 function displayLEDs() {
@@ -542,6 +614,14 @@ function displayLEDs() {
   } else {
     // soundset3 off
     stroke(0, 122, 158, 90); strokeWeight(3); line(155, 357, 170, 357);
+  }
+
+  if (soundset4) {
+    // soundset4 on
+    stroke(0, 122, 158); strokeWeight(5); line(155, 387, 170, 387);
+  } else {
+    // soundset4 off
+    stroke(0, 122, 158, 90); strokeWeight(3); line(155, 387, 170, 387);
   }
 
   // black square left
